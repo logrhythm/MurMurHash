@@ -1,0 +1,11 @@
+/CMakeCache.txt
+/CTestTestfile.cmake
+/Makefile
+/UnitTestRunner
+/cmake_install.cmake
+/CMakeFiles/
+/3rdparty/gtest-1.7.0/
+/libgtest_170_lib.so
+/libmurmurhash.so
+/libmurmurhash_shared.so
+/nbproject/
