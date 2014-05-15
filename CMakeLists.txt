@@ -68,10 +68,10 @@ file(GLOB SRC_FILES ${PROJECT_SRC}/*.h ${PROJECT_SRC}/*.hpp ${PROJECT_SRC}/*.cpp
  
 # Create the MurMurHash library
 include_directories(${PROJECT_SRC})
-add_library(murmurhash ${SRC_FILES})
-set_target_properties(murmurhash PROPERTIES LINKER_LANGUAGE CXX)
-add_library(murmurhash_shared SHARED ${SRC_FILES})
-set_target_properties(murmurhash_shared PROPERTIES LINKER_LANGUAGE CXX)
+add_library(MurMurHash ${SRC_FILES})
+set_target_properties(MurMurHash PROPERTIES LINKER_LANGUAGE CXX)
+add_library(MurMurHash_shared SHARED ${SRC_FILES})
+set_target_properties(MurMurHash_shared PROPERTIES LINKER_LANGUAGE CXX)
 
 
 # create the unit tests
@@ -98,4 +98,4 @@ file(GLOB TEST_SRC_FILES ${DIR_UNIT_TEST}/*.h ${DIR_UNIT_TEST}/*.hpp ${DIR_UNIT_
 IF( NOT(MSVC))
   set_target_properties(${test} PROPERTIES COMPILE_FLAGS "-isystem -pthread ")
 ENDIF( NOT(MSVC))
-target_link_libraries(UnitTestRunner murmurhash gtest_170_lib ${PLATFORM_LINK_LIBRIES})
+target_link_libraries(UnitTestRunner MurMurHash gtest_170_lib ${PLATFORM_LINK_LIBRIES})
