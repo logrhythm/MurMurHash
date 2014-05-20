@@ -2,6 +2,7 @@
 set -e
 
 NAME=MurMurHash
+export CMAKE_CXX_COMPILER=g++
 
 rm -f  CMakeCache.txt
 cd 3rdparty
