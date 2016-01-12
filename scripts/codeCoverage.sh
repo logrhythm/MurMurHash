@@ -40,8 +40,8 @@ cd ..
 
 
 
-PROJECT="DeathKnell"
-OBJECT_DIR="DeathKnell.dir"
+PROJECT="MurMurHash"
+OBJECT_DIR="MurMurHash.dir"
 #copy source cpp files and profile files to the coverage dir
 cp build/CMakeFiles/$OBJECT_DIR/src/* $COVERAGE_DIR
 #convert the whitelist to a filter
