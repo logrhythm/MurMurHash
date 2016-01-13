@@ -26,7 +26,7 @@ mkdir -p build
 cd build
 
 # just some dummy version to please cmake
-GIT_VERSION=`git rev-list HEAD --count`
+GIT_VERSION=`git rev-list --branches HEAD | wc -l`
 VERSION="1.$GIT_VERSION"
 
 
