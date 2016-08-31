@@ -3,7 +3,7 @@ set -e
 
 PACKAGE=MurMurHash
 
-if [[ $1 -lt 1 ]] ; then
+if [[ $# -lt 1 ]] ; then
     echo 'Usage:  sh buildRpm <BUILD_NUMBER>'
     exit 0
 fi
