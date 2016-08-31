@@ -1,6 +1,6 @@
 Name:          MurMurHash
 Version:       %{version}
-Release:       1%{?dist}
+Release:       %{buildnumber}%{?dist}
 Summary:       An implemnetation of MurMurHash for C++
 Group:         Development/Tools
 License:       MIT
