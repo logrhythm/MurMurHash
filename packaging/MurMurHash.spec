@@ -1,6 +1,6 @@
 Name:          MurMurHash
 Version:       %{version}
-Release:       1%{?dist}
+Release:       %{buildnumber}%{?dist}
 Summary:       An implemnetation of MurMurHash for C++
 Group:         Development/Tools
 License:       MIT
@@ -27,7 +27,7 @@ rm -f  CMakeCache.txt
 cd 3rdparty
 unzip -u gtest-1.7.0.zip
 cd ..
-/usr/local/probe/bin/cmake -DVERSION=%{version}  -DCMAKE_CXX_COMPILER_ARG1:STRING=' -fPIC -Ofast -m64 -Wl,-rpath -Wl,/usr/local/probe/lib -Wl,-rpath -Wl,/usr/local/probe/lib64 ' -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER=/usr/local/probe/bin/g++
+/usr/local/probe/bin/cmake -DVERSION=%{version}.%{buildnumber}  -DCMAKE_CXX_COMPILER_ARG1:STRING=' -fPIC -Ofast -m64 -Wl,-rpath -Wl,/usr/local/probe/lib -Wl,-rpath -Wl,/usr/local/probe/lib64 ' -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER=/usr/local/probe/bin/g++
 make
 ./UnitTestRunner
 mkdir -p $RPM_BUILD_ROOT/usr/local/probe/lib
