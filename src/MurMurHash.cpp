@@ -7,8 +7,6 @@
  * 
  * Adapted from code found at https://github.com/PeterScott/murmur3
  * 
- * https://github.com/weberr13/Murmur
- * 
  * @param input
  *    A std::vector of unsigned bytes that will be checked
  * @return 
