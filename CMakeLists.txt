@@ -35,11 +35,29 @@ file(GLOB SRC_FILES ${PROJECT_SRC}/*.h ${PROJECT_SRC}/*.hpp ${PROJECT_SRC}/*.cpp
 # Name for the library
 SET(LIBRARY_TO_BUILD MurMurHash)
 
+# Find the current version if not already set
+
+SET(MAJOR_VERSION 1)
+IF (NOT DEFINED ${VERSION})
+   MESSAGE("Extracting git software version")
+   execute_process(COMMAND bash "-c" "git rev-list --branches HEAD | wc -l | tr -d ' ' | tr -d '\n'" OUTPUT_VARIABLE GIT_VERSION)
+   SET(MINOR_VERSION ${GIT_VERSION})
+   SET(BUILD_NUMBER 0)
+   SET(VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${BUILD_NUMBER}) 
+ENDIF()
+MESSAGE("Software Version: ${VERSION}")
+
 # Create the MurMurHash library
 include_directories(${PROJECT_SRC})
 add_library(${LIBRARY_TO_BUILD} SHARED  ${SRC_FILES})
 SET(MurMurHash_VERSION_STRING ${VERSION})
-SET_TARGET_PROPERTIES(${LIBRARY_TO_BUILD} PROPERTIES LINKER_LANGUAGE CXX SOVERSION ${VERSION})
+SET_TARGET_PROPERTIES(${LIBRARY_TO_BUILD} PROPERTIES LINKER_LANGUAGE CXX )
+
+set_target_properties(${LIBRARY_TO_BUILD} PROPERTIES 
+                          VERSION ${VERSION}
+                          SOVERSION ${MAJOR_VERSION} )
+
+
 TARGET_LINK_LIBRARIES(${LIBRARY_TO_BUILD} ${TCMALLOC})
 
 
