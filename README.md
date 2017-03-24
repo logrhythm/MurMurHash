@@ -21,7 +21,7 @@ make
 sudo make install
 ```
 
-Alternative on Debian systems
+Alternative on Debian systems after `cmake ..`
 ```
 make package
 sudo dpkg -i MurMurHash<package_version>Linux.deb
