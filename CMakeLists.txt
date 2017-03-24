@@ -14,8 +14,6 @@ project (MurMurHash)
 set(PROJECT_SRC ${MurMurHash_SOURCE_DIR}/src)
 set(DIR_UNIT_TEST ${MurMurHash_SOURCE_DIR}/test)
 set(DIR_3RDPARTY ${MurMurHash_SOURCE_DIR}/3rdparty)
-
-
 MESSAGE(" PROJECT_SRC = : ${PROJECT_SRC}")
 include_directories(${PROJECT_SRC})
 SET(ACTIVE_CPP0xx_DIR "Release")
@@ -77,8 +75,20 @@ include_directories(test)
 include_directories(${PROJECT_SRC})
 file(GLOB TEST_SRC_FILES "test/*.cpp")
 
-
-
 add_executable(UnitTestRunner 3rdparty/test_main.cpp ${TEST_SRC_FILES} )
 target_link_libraries(UnitTestRunner ${LIBRARY_TO_BUILD} gtest_170_lib ${LIBS})
 set_target_properties(${test} PROPERTIES COMPILE_FLAGS "-isystem -pthread ")
+
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+   FILE(GLOB HEADER_FILES ${PROJECT_SRC}/*.h)
+   # ==========================================================================
+   #   Package handling is done AFTER all other CMake setup
+   #   usage:   make package
+   #   Check the output result and install accordingly.
+   # ==========================================================================
+   INCLUDE (${MurMurHash_SOURCE_DIR}/CPackLists.txt)
+ENDIF()
+
+
+
