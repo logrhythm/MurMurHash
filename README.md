@@ -14,6 +14,7 @@ An implementation of the MurMurHash3 function in C++
 ```
 cd 3rdparty
 unzip gtest-1.7.0.zip
+cd ..
 mkdir build
 cd build
 cmake ..
