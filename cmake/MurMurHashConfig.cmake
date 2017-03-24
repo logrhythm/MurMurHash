@@ -17,12 +17,17 @@
 #   that includes libgMurMurHash library files.
 # ``MURMURHASH_FOUND``
 #   If false, do not try to use MurMurHash.
+
 include(FindPackageHandleStandardArgs)
-find_path(MURMURHASH_INCLUDE_DIR MurMurhash.h)
+
+find_path(MURMURHASH_INCLUDE_DIR ${PROJECT_SRC}/MurMurHash.h)
 find_library(MURMURHASH_LIBRARY
-            NAMES libgMurMurHash MurMurhash)
+            NAMES libMurMurHash MurMurhash)
+
 find_package_handle_standard_args(MURMURHASH  DEFAULT_MSG
             MURMURHASH_INCLUDE_DIR MURMURHASH_LIBRARY)
+
 mark_as_advanced(MURMURHASH_INCLUDE_DIR MURMURHASH_LIBRARY)
+
 set(MURMURHASH_LIBRARIES ${MURMURHASH_LIBRARY})
 set(MURMURHASH_INCLUDE_DIRS ${MURMURHASH_INCLUDE_DIR})
