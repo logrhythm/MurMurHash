@@ -9,3 +9,20 @@ An implementation of the MurMurHash3 function in C++
 
 ## API
 [[MurMurhash.h]] (https://github.com/LogRhythm/MurMurHash/blob/master/src/MurMurHash.h)
+
+## BUILD
+```
+cd 3rdparty
+unzip gtest-1.7.0.zip
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+```
+
+Alternative on Debian systems
+```
+make package
+sudo dpkg -i MurMurHash<package_version>Linux.deb
+```
