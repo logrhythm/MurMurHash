@@ -22,12 +22,14 @@ fi
 %build
 # SKIP_BUILD_RPATH, CMAKE_SKIP_BUILD_RPATH, 
 cd %{name}/
-PATH=/usr/local/probe/bin:$PATH
+PATH=/usr/local/gcc/bin:/usr/local/probe/bin:$PATH
 rm -f  CMakeCache.txt
 cd 3rdparty
 unzip -u gtest-1.7.0.zip
 cd ..
-/usr/local/probe/bin/cmake -DVERSION:STRING='%{version}.%{buildnumber}'  -DCMAKE_CXX_COMPILER_ARG1:STRING=' -fPIC -Ofast -m64 -Wl,-rpath -Wl,/usr/local/probe/lib -Wl,-rpath -Wl,/usr/local/probe/lib64 ' -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER=/usr/local/probe/bin/g++
+/usr/local/probe/bin/cmake -DVERSION:STRING='%{version}.%{buildnumber}' \
+   -DCMAKE_CXX_COMPILER_ARG1:STRING=' -fPIC -Ofast -m64 -I/usr/local/gcc/include -Wl,-rpath -Wl,/usr/local/probe/lib -Wl,-rpath -Wl,/usr/local/gcc/lib64 ' \
+   -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER=/usr/local/gcc/bin/g++
 make
 ./UnitTestRunner
 mkdir -p $RPM_BUILD_ROOT/usr/local/probe/lib
