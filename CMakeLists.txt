@@ -63,7 +63,6 @@ set_target_properties(${LIBRARY_TO_BUILD} PROPERTIES
                           SOVERSION ${MAJOR_VERSION} )
 
 
-TARGET_LINK_LIBRARIES(${LIBRARY_TO_BUILD} ${TCMALLOC})
 
 
 
