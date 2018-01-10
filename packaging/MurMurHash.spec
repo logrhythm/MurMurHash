@@ -28,7 +28,7 @@ cd 3rdparty
 unzip -u gtest-1.7.0.zip
 cd ..
 /usr/local/probe/bin/cmake -DVERSION:STRING='%{version}.%{buildnumber}' \
-   -DCMAKE_CXX_COMPILER_ARG1:STRING=' -fPIC -Ofast -m64 -I/usr/local/gcc/include -Wl,-rpath -Wl,/usr/local/probe/lib -Wl,-rpath -Wl,/usr/local/gcc/lib64 ' \
+   -DCMAKE_CXX_COMPILER_ARG1:STRING=' -fPIC -Ofast -m64 -isystem/usr/local/gcc/include -isystem/usr/local/probe/include -Wl,-rpath -Wl,/usr/local/probe/lib -Wl,-rpath -Wl,/usr/local/gcc/lib64 ' \
    -DCMAKE_BUILD_TYPE:STRING=Release -DBUILD_SHARED_LIBS:BOOL=ON -DCMAKE_CXX_COMPILER=/usr/local/gcc/bin/g++
 make
 ./UnitTestRunner
