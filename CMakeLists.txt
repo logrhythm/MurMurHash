@@ -8,14 +8,11 @@
 
 cmake_minimum_required (VERSION 2.6)
 ENABLE_LANGUAGE(CXX)
-#set(CMAKE_BUILD_TYPE Release)
-
+set(CMAKE_BUILD_TYPE Release)
 project (MurMurHash)
 set(PROJECT_SRC ${MurMurHash_SOURCE_DIR}/src)
 set(DIR_UNIT_TEST ${MurMurHash_SOURCE_DIR}/test)
 set(DIR_3RDPARTY ${MurMurHash_SOURCE_DIR}/3rdparty)
-
-
 MESSAGE(" PROJECT_SRC = : ${PROJECT_SRC}")
 include_directories(${PROJECT_SRC})
 SET(ACTIVE_CPP0xx_DIR "Release")
@@ -35,12 +32,37 @@ file(GLOB SRC_FILES ${PROJECT_SRC}/*.h ${PROJECT_SRC}/*.hpp ${PROJECT_SRC}/*.cpp
 # Name for the library
 SET(LIBRARY_TO_BUILD MurMurHash)
 
+
+
+SET(MAJOR_VERSION 1)
+
+# Find the current version if not already set
+# =============================================
+# workaround due to cmake 2.8 or otherwise where variables cannot 
+# easily be detected for existance
+# i.e the following does NOT work 
+# IF (NOT DEFINED ${VERSION})
+#
+IF (${VERSION}.x STREQUAL ".x")
+   MESSAGE("Extracting git software version")
+   execute_process(COMMAND bash "-c" "git rev-list --branches HEAD | wc -l | tr -d ' ' | tr -d '\n'" OUTPUT_VARIABLE GIT_VERSION)
+   SET(MINOR_VERSION ${GIT_VERSION})
+   SET(BUILD_NUMBER 0)
+   SET(VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${BUILD_NUMBER}) 
+ENDIF()
+MESSAGE("Software Version: ${VERSION}")
+
 # Create the MurMurHash library
 include_directories(${PROJECT_SRC})
 add_library(${LIBRARY_TO_BUILD} SHARED  ${SRC_FILES})
 SET(MurMurHash_VERSION_STRING ${VERSION})
-SET_TARGET_PROPERTIES(${LIBRARY_TO_BUILD} PROPERTIES LINKER_LANGUAGE CXX SOVERSION ${VERSION})
-TARGET_LINK_LIBRARIES(${LIBRARY_TO_BUILD} ${TCMALLOC})
+SET_TARGET_PROPERTIES(${LIBRARY_TO_BUILD} PROPERTIES LINKER_LANGUAGE CXX )
+
+set_target_properties(${LIBRARY_TO_BUILD} PROPERTIES 
+                          VERSION ${VERSION}
+                          SOVERSION ${MAJOR_VERSION} )
+
+
 
 
 
@@ -59,8 +81,20 @@ include_directories(test)
 include_directories(${PROJECT_SRC})
 file(GLOB TEST_SRC_FILES "test/*.cpp")
 
-
-
 add_executable(UnitTestRunner 3rdparty/test_main.cpp ${TEST_SRC_FILES} )
 target_link_libraries(UnitTestRunner ${LIBRARY_TO_BUILD} gtest_170_lib ${LIBS})
 set_target_properties(${test} PROPERTIES COMPILE_FLAGS "-isystem -pthread ")
+
+
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+   FILE(GLOB HEADER_FILES ${PROJECT_SRC}/*.h)
+   # ==========================================================================
+   #   Package handling is done AFTER all other CMake setup
+   #   usage:   make package
+   #   Check the output result and install accordingly.
+   # ==========================================================================
+   INCLUDE (${MurMurHash_SOURCE_DIR}/CPackLists.txt)
+ENDIF()
+
+
+

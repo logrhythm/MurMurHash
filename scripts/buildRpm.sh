@@ -3,6 +3,13 @@ set -e
 
 PACKAGE=MurMurHash
 
+if [[ $# -lt 1 ]] ; then
+    echo 'Usage:  sh buildRpm <BUILD_NUMBER>'
+    exit 0
+fi
+
+BUILD="$1"
+
 PWD=`pwd`
 CWD=$PWD/$PACKAGE
 DISTDIR=$CWD/dist/$PACKAGE
@@ -19,7 +26,7 @@ rm -f $PACKAGE-$VERSION.tar.gz
 tar czf $PACKAGE-$VERSION.tar.gz ./*
 cp $PACKAGE-$VERSION.tar.gz ~/rpmbuild/SOURCES
 cd ~/rpmbuild
-rpmbuild -v -bb --define="version ${VERSION}"  --target=x86_64 ~/rpmbuild/SPECS/$PACKAGE.spec
+rpmbuild -v -bb --define="version ${VERSION}" --define="buildnumber ${BUILD}"  --target=x86_64 ~/rpmbuild/SPECS/$PACKAGE.spec
 
 # Copy the artifacts to the local distribution directory
 rm -rf $DISTDIR
