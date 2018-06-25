@@ -3,12 +3,22 @@ set -e
 
 PACKAGE=MurMurHash
 
-if [[ $# -lt 1 ]] ; then
-    echo 'Usage:  sh buildRpm <BUILD_NUMBER>'
-    exit 0
+if [[ $# -ne 2 ]] ; then
+   echo 'Usage:  sh buildRpm <BUILD_TYPE> <BUILD_NUMBER>'
+   echo '        BUILD_TYPE is PRODUCTION or DEBUG'
+   exit 0
 fi
 
-BUILD="$1"
+if [ "$1" = "PRODUCTION"  ] ; then
+   BUILD_TYPE="-DUSE_LR_DEBUG=OFF"
+elif  [ "$1" = "DEBUG"  ] ; then
+   BUILD_TYPE="-DUSE_LR_DEBUG=ON"
+else
+   echo "<BUILD_TYPE> must be one of: PRODUCTION or DEBUG"
+   exit 0
+fi
+
+BUILD="$2"
 
 PWD=`pwd`
 CWD=$PWD/$PACKAGE
@@ -26,7 +36,7 @@ rm -f $PACKAGE-$VERSION.tar.gz
 tar czf $PACKAGE-$VERSION.tar.gz ./*
 cp $PACKAGE-$VERSION.tar.gz ~/rpmbuild/SOURCES
 cd ~/rpmbuild
-rpmbuild -v -bb --define="version ${VERSION}" --define="buildnumber ${BUILD}"  --target=x86_64 ~/rpmbuild/SPECS/$PACKAGE.spec
+rpmbuild -v -bb --define="version ${VERSION}" --define="buildtype ${BUILD_TYPE}" --define="buildnumber ${BUILD}"  --target=x86_64 ~/rpmbuild/SPECS/$PACKAGE.spec
 
 # Copy the artifacts to the local distribution directory
 rm -rf $DISTDIR
