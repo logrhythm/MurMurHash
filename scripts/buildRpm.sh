@@ -29,7 +29,6 @@ GIT_VERSION=`git rev-list --branches HEAD | wc -l`
 VERSION="1.$GIT_VERSION"
 
 
-rm -rf ~/rpmbuild
 rpmdev-setuptree
 cp packaging/$PACKAGE.spec ~/rpmbuild/SPECS
 rm -f $PACKAGE-$VERSION.tar.gz
