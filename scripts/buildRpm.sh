@@ -4,21 +4,21 @@ set -e
 PACKAGE=MurMurHash
 
 if [[ $# -ne 2 ]] ; then
-   echo 'Usage:  sh buildRpm <BUILD_NUMBER> <BUILD_TYPE>'
+   echo 'Usage:  sh buildRpm <BUILD_TYPE> <BUILD_NUMBER>'
    echo '        BUILD_TYPE is PRODUCTION or DEBUG'
    exit 0
 fi
 
-if [ "$2" = "PRODUCTION"  ] ; then
+if [ "$1" = "PRODUCTION"  ] ; then
    BUILD_TYPE="-DUSE_LR_DEBUG=OFF"
-elif  [ "$2" = "DEBUG"  ] ; then
+elif  [ "$1" = "DEBUG"  ] ; then
    BUILD_TYPE="-DUSE_LR_DEBUG=ON"
 else
    echo "<BUILD_TYPE> must be one of: PRODUCTION or DEBUG"
    exit 0
 fi
 
-BUILD="$1"
+BUILD="$2"
 
 PWD=`pwd`
 CWD=$PWD/$PACKAGE
