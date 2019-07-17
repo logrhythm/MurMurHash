@@ -28,7 +28,7 @@ PATH=$PATH:/usr/local/probe/bin:$PATH
 GIT_VERSION=`git rev-list --branches HEAD | wc -l`
 VERSION="1.$GIT_VERSION"
 
-
+sudo rm -rf ~/rpmbuild
 rpmdev-setuptree
 cp packaging/$PACKAGE.spec ~/rpmbuild/SPECS
 rm -f $PACKAGE-$VERSION.tar.gz
